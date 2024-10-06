@@ -1,0 +1,17 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "Federated": "arn:aws:iam::058264151956:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/7600F187ACE53E1A83502D6CFF462BAC"
+      },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "oidc.eks.us-east-1.amazonaws.com/id/7600F187ACE53E1A83502D6CFF462BAC:sub": "system:serviceaccount:prometheus-monitoring:amp-iamproxy-query-service-account"
+        }
+      }
+    }
+  ]
+}
