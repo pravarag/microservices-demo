@@ -24,9 +24,5 @@ kubectl config current-context
 kubectl cluster-info
 kubectl get nodes
 
-echo "Setting for prometheus..."
-createIRSA-AMPIngest.sh
-createIRSA-AMPQuery.sh
-
-kubectl create ns prometheus-monitoring
-echo "Now okay to deploy prometheus helm chart"
+echo "Initializing prometheus configurations....."
+install-aws-prometheus.sh
