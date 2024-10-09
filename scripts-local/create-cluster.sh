@@ -25,4 +25,4 @@ kubectl cluster-info
 kubectl get nodes
 
 echo "Initializing prometheus configurations....."
-install-aws-prometheus.sh
+# install-aws-prometheus.sh

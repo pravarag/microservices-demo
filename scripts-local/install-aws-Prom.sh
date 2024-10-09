@@ -8,16 +8,17 @@ echo "Creating prometheus namespace..."
 kubectl create ns ${PROM_NAMESPACE}
 
 echo "Set up service roles for ingestion of metrics..."
-createIRSA-AMPIngest.sh
-createIRSA-AMPQuery.sh
+pwd
+./createIRSA-AMPIngest.sh
+./createIRSA-AMPQuery.sh
 
 
 echo "Setting up ebs for prometheus"
-export EBS_CSI_POLICY_NAME=AmazonEBSCSIPolicy
+export EBS_CSI_POLICY_NAME="AmazonEBSCSIPolicy"
 aws iam create-policy \
 --region "us-east-1" \
 --policy-name $EBS_CSI_POLICY_NAME \
---policy-document ./ebs-csi-policy.json
+--policy-document file://ebs-csi-policy.json
 export EBS_CSI_POLICY_ARN=$(aws --region us-east-1 iam list-policies --query 'Policies[?PolicyName==`'$EBS_CSI_POLICY_NAME'`].Arn' --output text)
 echo $EBS_CSI_POLICY_ARN
 
@@ -44,7 +45,7 @@ helm upgrade --install aws-ebs-csi-driver \
   aws-ebs-csi-driver/aws-ebs-csi-driver
 
 
-helm install prometheus-demo prometheus-community/prometheus -n ${PROM_NAMESPACE} -f ../aws-prometheus/my_prometheus_values.yaml \
+helm install prometheus-demo prometheus-community/prometheus -n ${PROM_NAMESPACE} -f /home/pravarag/work/git-clones/microservices-demo/aws-prometheus/my_prometheus_values.yaml \
      --set alertmanager.persistentvolume.storageClass="gp2",server.persistentvolume.storageClass="gp2"
 
 
